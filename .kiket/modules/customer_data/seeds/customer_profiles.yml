@@ -1,0 +1,18 @@
+table: customer_profiles
+records:
+  - email: onboarding@example.com
+    lifecycle_stage: onboarding
+    segment_tags: "first_time,sample"
+    total_orders: 1
+    total_revenue: 59.90
+    lifetime_value: 59.90
+    metadata:
+      source: seed
+  - email: repeat@example.com
+    lifecycle_stage: engaged_repeat
+    segment_tags: "loyalty"
+    total_orders: 4
+    total_revenue: 240.00
+    lifetime_value: 260.00
+    metadata:
+      source: seed

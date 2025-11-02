@@ -1,0 +1,35 @@
+model_version: 1.0
+board:
+  key: ecommerce_customer_lifecycle_board
+  workflow: ecommerce_customer_lifecycle
+  name: "Customer Lifecycle Control Center"
+  views:
+    - key: lifecycle-kanban
+      type: kanban
+      lanes:
+        - prospect
+        - onboarding
+        - engaged_repeat
+        - churn_watch
+        - win_back
+        - archived
+      settings:
+        show_dependencies: false
+        compact_mode: false
+        lane_metrics:
+          - type: count
+          - type: sum
+            field: customer_lifetime_value
+    - key: lifecycle-table
+      type: table
+      columns:
+        - type: status
+        - type: owner
+        - type: labels
+        - type: datetime
+          field: next_playbook_step_at
+        - type: numeric
+          field: customer_lifetime_value
+    - key: lifecycle-calendar
+      type: calendar
+      due_date_field: next_playbook_step_at

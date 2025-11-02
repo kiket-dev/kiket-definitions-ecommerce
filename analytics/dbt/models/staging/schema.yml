@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: stg_marketing_contacts
+    description: "Tenancy-scoped view of marketing contacts with lifecycle attributes."
+    columns:
+      - name: contact_id
+        tests:
+          - not_null
+      - name: organization_id
+        tests:
+          - not_null
+      - name: email
+        tests:
+          - not_null
+      - name: lifecycle_stage
+        tests:
+          - not_null
+  - name: stg_marketing_events
+    description: "Normalized marketing events (touchpoints, orders, support interactions)."
+    columns:
+      - name: event_id
+        tests:
+          - not_null
+          - unique
+      - name: organization_id
+        tests:
+          - not_null
+      - name: event_type
+        tests:
+          - not_null

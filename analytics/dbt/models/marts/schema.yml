@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: dim_customer_segments
+    description: "Customer segments with lifecycle metadata for marketing automation."
+    columns:
+      - name: contact_id
+        tests:
+          - not_null
+      - name: organization_id
+        tests:
+          - not_null
+      - name: lifecycle_stage
+        tests:
+          - not_null
+  - name: fct_customer_engagement
+    description: "Weekly engagement metrics powering lifecycle dashboards."
+    columns:
+      - name: metric
+        tests:
+          - not_null
+      - name: value
+        tests:
+          - not_null

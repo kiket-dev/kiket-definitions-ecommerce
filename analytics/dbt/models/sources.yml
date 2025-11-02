@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: customer_data
+    database: "{{ target.database }}"
+    schema: "{{ var('raw_schema', 'public') }}"
+    tables:
+      - name: marketing_contacts
+        description: "Latest snapshot of customer marketing attributes (identity, consent, lifecycle stage)."
+      - name: marketing_events
+        description: "Timeline of marketing interactions (emails, sms, push, orders, support touches)."

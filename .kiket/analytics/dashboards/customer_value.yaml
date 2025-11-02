@@ -1,0 +1,70 @@
+model_version: "1.0"
+dashboard:
+  id: customer-value-snapshot
+  name: "Customer Value Snapshot"
+  description: "Track lifetime value trends, cohort performance, and automation coverage."
+  widgets:
+    - id: clv-trend
+      type: timeseries
+      title: "Average CLV by Cohort"
+      query: dim_customer_segments
+      query_config:
+        model: dim_customer_segments
+        select:
+          - cohort_month
+          - avg_clv
+        parameters:
+          - name: organization_id
+            type: integer
+            required: true
+      visualization:
+        x: cohort_month
+        y: avg_clv
+        format: currency
+    - id: automation-coverage
+      type: kpi
+      title: "Automation Coverage"
+      query: fct_customer_engagement
+      query_config:
+        model: fct_customer_engagement
+        filters:
+          metric: automated_touch_rate
+        parameters:
+          - name: organization_id
+            type: integer
+            required: true
+      options:
+        comparison:
+          interval: "30d"
+    - id: segment-mix
+      type: leaderboard
+      title: "Segment Mix"
+      query: dim_customer_segments
+      query_config:
+        model: dim_customer_segments
+        parameters:
+          - name: organization_id
+            type: integer
+            required: true
+      visualization:
+        group_by: segment_name
+        value: contact_count
+    - id: attrition-risk
+      type: table
+      title: "High-Risk Customers"
+      query: dim_customer_segments
+      query_config:
+        model: dim_customer_segments
+        filters:
+          lifecycle_stage: churn_watch
+        parameters:
+          - name: organization_id
+            type: integer
+            required: true
+      options:
+        columns:
+          - customer_id
+          - lifecycle_stage
+          - last_order_date
+          - days_since_last_order
+          - predicted_churn_probability

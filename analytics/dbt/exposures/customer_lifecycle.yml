@@ -1,0 +1,25 @@
+version: 2
+
+exposures:
+  - name: customer_lifecycle_dashboard
+    type: dashboard
+    maturity: medium
+    url: https://app.kiket.io/analytics/dashboards/customer-lifecycle-health
+    description: "Lifecycle performance dashboard bundled with the e-commerce template."
+    depends_on:
+      - ref('fct_customer_engagement')
+      - ref('dim_customer_segments')
+    owner:
+      name: "Lifecycle Ops"
+      email: "lifecycle@kiket.io"
+  - name: customer_value_dashboard
+    type: dashboard
+    maturity: medium
+    url: https://app.kiket.io/analytics/dashboards/customer-value-snapshot
+    description: "Customer value and automation coverage dashboard for retention teams."
+    depends_on:
+      - ref('fct_customer_engagement')
+      - ref('dim_customer_segments')
+    owner:
+      name: "Lifecycle Ops"
+      email: "lifecycle@kiket.io"

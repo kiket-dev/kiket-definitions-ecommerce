@@ -1,0 +1,66 @@
+model_version: "1.0"
+module:
+  id: ecommerce.customer_data
+  name: "E-commerce Customer Data"
+  version: "0.1.0"
+  scope: project
+  tables:
+    - name: customer_profiles
+      description: "Canonical profile enriched for lifecycle automation"
+      soft_delete: true
+      columns:
+        - name: email
+          type: string
+          null: false
+        - name: phone
+          type: string
+        - name: country_code
+          type: string
+        - name: lifecycle_stage
+          type: string
+          null: false
+          default: prospect
+        - name: segment_tags
+          type: text
+        - name: last_order_date
+          type: datetime
+        - name: total_orders
+          type: integer
+          default: 0
+        - name: total_revenue
+          type: decimal
+          precision: 12
+          scale: 2
+          default: 0
+        - name: lifetime_value
+          type: decimal
+          precision: 12
+          scale: 2
+          default: 0
+        - name: metadata
+          type: jsonb
+      indexes:
+        - columns: [project_id, email]
+          unique: true
+        - columns: [project_id, lifecycle_stage]
+    - name: customer_events
+      description: "Lifecycle and marketing events"
+      soft_delete: false
+      columns:
+        - name: contact_id
+          type: bigint
+          null: false
+        - name: event_type
+          type: string
+          null: false
+        - name: channel
+          type: string
+        - name: occurred_at
+          type: datetime
+          null: false
+        - name: payload
+          type: jsonb
+      indexes:
+        - columns: [project_id, contact_id]
+        - columns: [project_id, event_type]
+        - columns: [project_id, occurred_at]

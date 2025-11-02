@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: custom_profiles
+    description: "Denormalized view of customer profiles loaded via custom data modules."
+    columns:
+      - name: email
+        tests:
+          - not_null

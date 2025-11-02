@@ -1,0 +1,85 @@
+model_version: "1.0"
+dashboard:
+  id: customer-lifecycle-health
+  name: "Customer Lifecycle Health"
+  description: "Monitor onboarding velocity, churn risk volume, and win-back conversions."
+  widgets:
+    - id: onboarding-velocity
+      type: timeseries
+      title: "Onboarding Conversion Rate"
+      query: fct_customer_engagement
+      query_config:
+        model: fct_customer_engagement
+        filters:
+          metric: onboarding_conversion_rate
+        parameters:
+          - name: organization_id
+            type: integer
+            required: true
+        order_by:
+          - window_end
+      visualization:
+        x: window_end
+        y: value
+        format: percentage
+    - id: churn-watch-volume
+      type: kpi
+      title: "Customers on Churn Watch"
+      query: fct_customer_engagement
+      query_config:
+        model: fct_customer_engagement
+        filters:
+          metric: churn_watch_contacts
+        parameters:
+          - name: organization_id
+            type: integer
+            required: true
+      options:
+        comparison:
+          interval: "7d"
+    - id: win-back-leaderboard
+      type: leaderboard
+      title: "Win-Back Conversions"
+      query: fct_customer_engagement
+      query_config:
+        model: fct_customer_engagement
+        filters:
+          metric: win_back_conversions
+        parameters:
+          - name: organization_id
+            type: integer
+            required: true
+      visualization:
+        group_by: owner
+        value: value
+    - id: segment-drilldown
+      type: table
+      title: "Segment Engagement Snapshot"
+      query: dim_customer_segments
+      query_config:
+        model: dim_customer_segments
+        parameters:
+          - name: organization_id
+            type: integer
+            required: true
+      options:
+        columns:
+          - segment_name
+          - lifecycle_stage
+          - contact_count
+          - avg_order_value
+          - repeat_rate
+  alerts:
+    - query: fct_customer_engagement
+      condition: value > 0.2
+      description: "Churn watch population increased above 20% week-over-week."
+      notify_roles:
+        - manager
+      query_config:
+        model: fct_customer_engagement
+        filters:
+          metric: churn_watch_rate_delta
+        parameters:
+          - name: organization_id
+            type: integer
+            required: true

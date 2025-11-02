@@ -1,0 +1,42 @@
+model_version: 1.0
+issue_template:
+  key: ecommerce_customer_lifecycle_playbook
+  name: "Lifecycle Playbook Task"
+  issue_type: marketing_campaign
+  description: >
+    Coordinate a lifecycle experiment or campaign (onboarding, win-back, replenishment).
+    Use custom fields to capture target audience, success metrics, and automated touchpoints.
+  fields:
+    - key: target_segment
+      type: enum
+      required: true
+      label: "Target Segment"
+      options:
+        - first_time_buyers
+        - replenishment
+        - churn_watch
+        - win_back
+    - key: primary_goal
+      type: enum
+      label: "Primary Goal"
+      options:
+        - increase_repeat_rate
+        - boost_aov
+        - recover_churn_risk
+        - drive_subscription
+    - key: success_metric
+      type: string
+      label: "Success Metric (SQL/dbt Reference)"
+    - key: experiment_window_end
+      type: datetime
+      label: "Experiment Window End"
+      required: true
+    - key: estimated_clv_lift
+      type: numeric
+      label: "Estimated CLV Lift"
+    - key: automation_recipe
+      type: string
+      label: "Automation Recipe ID"
+  default_custom_fields:
+    owner: lifecycle_manager
+    primary_goal: increase_repeat_rate

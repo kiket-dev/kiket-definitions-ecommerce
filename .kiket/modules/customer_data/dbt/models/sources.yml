@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: custom_data
+    schema: "{{ var('organization_schema', target.schema) }}"
+    tables:
+      - name: customer_profiles
