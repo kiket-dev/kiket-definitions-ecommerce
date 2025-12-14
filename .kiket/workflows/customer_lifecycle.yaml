@@ -1,66 +1,97 @@
 model_version: 1.0
 workflow:
-  key: ecommerce_customer_lifecycle
-  name: "E-commerce Customer Lifecycle"
+  id: ecommerce_customer_lifecycle
+  name: E-commerce Customer Lifecycle
   description: >
     Coordinate lifecycle touchpoints from first purchase through repeat retention,
     churn-prevention, and win-back plays. States map directly into marketing
     automations and analytics dashboards delivered with this template.
-  states:
-    - key: prospect
-      name: Prospect
-      initial: true
+
+states:
+  prospect:
+    type: initial
+    category: pending
+    metadata:
+      label: Prospect
+      color: secondary
+      icon: 👤
       description: Contacts acquired via lead capture awaiting first conversion.
-    - key: onboarding
-      name: Onboarding
+  onboarding:
+    type: active
+    category: active
+    metadata:
+      label: Onboarding
+      color: info
+      icon: 🎁
       description: First-time purchasers in their initial 30-day nurture sequence.
-    - key: engaged_repeat
-      name: Engaged Repeat
+  engaged_repeat:
+    type: active
+    category: active
+    metadata:
+      label: Engaged Repeat
+      color: success
+      icon: 🔄
       description: Loyal customers with active replenishment or repeat orders.
-    - key: churn_watch
-      name: Churn Watch
+  churn_watch:
+    type: active
+    category: review
+    metadata:
+      label: Churn Watch
+      color: warning
+      icon: ⚠️
       description: Customers approaching lapse thresholds or declining engagement.
-      wip_limit: 40
-    - key: win_back
-      name: Win Back
+    wip_limit: 40
+  win_back:
+    type: active
+    category: active
+    metadata:
+      label: Win Back
+      color: primary
+      icon: 🎯
       description: Campaigns focused on reactivating dormant customers.
-    - key: archived
-      name: Archived
+  archived:
+    type: final
+    category: completed
+    metadata:
+      label: Archived
+      color: secondary
+      icon: 📦
       description: Contacts removed from active programmes (opt-out, inactive > 18 months).
-  transitions:
-    - from: prospect
-      to: onboarding
-      description: Conversion or opt-in triggers the onboarding playbook.
-      guards:
-        - type: extension
-          id: ecommerce_contact_enrichment
-    - from: onboarding
-      to: engaged_repeat
-      description: Marked as repeat after second order or subscription start.
-    - from: engaged_repeat
-      to: churn_watch
-      description: Engagement score falls below threshold or order cadence slips.
-    - from: churn_watch
-      to: engaged_repeat
-      description: Customer re-engages or completes replenishment flow.
-    - from: churn_watch
-      to: win_back
-      description: Contact is unresponsive after configured automation attempts.
-    - from: win_back
-      to: engaged_repeat
-      description: Recovered customer completes a high-value action.
-    - from: win_back
-      to: archived
-      description: Contact unsubscribes or is suppressed from further outreach.
-    - from: onboarding
-      to: archived
-      description: Opt-outs or fraud signals during onboarding.
-    - from: engaged_repeat
-      to: archived
-      description: Compliance removal or opted-out loyalty member.
-  metadata:
-    default_board: ecommerce_customer_lifecycle_board
-    default_issue_template: ecommerce_customer_lifecycle_playbook
-    dashboards:
-      - customer-lifecycle-health
-      - customer-value-snapshot
+
+transitions:
+  - from: prospect
+    to: onboarding
+    name: Convert
+    description: Conversion or opt-in triggers the onboarding playbook.
+  - from: onboarding
+    to: engaged_repeat
+    name: Activate
+    description: Marked as repeat after second order or subscription start.
+  - from: engaged_repeat
+    to: churn_watch
+    name: Flag at Risk
+    description: Engagement score falls below threshold or order cadence slips.
+  - from: churn_watch
+    to: engaged_repeat
+    name: Re-engage
+    description: Customer re-engages or completes replenishment flow.
+  - from: churn_watch
+    to: win_back
+    name: Start Win-back
+    description: Contact is unresponsive after configured automation attempts.
+  - from: win_back
+    to: engaged_repeat
+    name: Recover
+    description: Recovered customer completes a high-value action.
+  - from: win_back
+    to: archived
+    name: Archive
+    description: Contact unsubscribes or is suppressed from further outreach.
+  - from: onboarding
+    to: archived
+    name: Remove
+    description: Opt-outs or fraud signals during onboarding.
+  - from: engaged_repeat
+    to: archived
+    name: Remove
+    description: Compliance removal or opted-out loyalty member.
