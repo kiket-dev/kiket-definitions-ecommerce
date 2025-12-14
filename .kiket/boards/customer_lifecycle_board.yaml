@@ -1,35 +1,51 @@
 model_version: 1.0
 board:
-  key: ecommerce_customer_lifecycle_board
+  id: customer-lifecycle-board
+  name: Customer Lifecycle Board
+  type: kanban
+  description: Track customers through lifecycle stages from prospect to engaged repeat or archive.
   workflow: ecommerce_customer_lifecycle
-  name: "Customer Lifecycle Control Center"
-  views:
-    - key: lifecycle-kanban
-      type: kanban
-      lanes:
-        - prospect
-        - onboarding
-        - engaged_repeat
-        - churn_watch
-        - win_back
-        - archived
-      settings:
-        show_dependencies: false
-        compact_mode: false
-        lane_metrics:
-          - type: count
-          - type: sum
-            field: customer_lifetime_value
-    - key: lifecycle-table
-      type: table
-      columns:
-        - type: status
-        - type: owner
-        - type: labels
-        - type: datetime
-          field: next_playbook_step_at
-        - type: numeric
-          field: customer_lifetime_value
-    - key: lifecycle-calendar
-      type: calendar
-      due_date_field: next_playbook_step_at
+  default: true
+columns:
+  - key: prospect
+    name: Prospect
+    states: [prospect]
+    wip_limit: 50
+    color: secondary
+  - key: onboarding
+    name: Onboarding
+    states: [onboarding]
+    wip_limit: 30
+    color: info
+  - key: engaged
+    name: Engaged Repeat
+    states: [engaged_repeat]
+    color: success
+  - key: churn-watch
+    name: Churn Watch
+    states: [churn_watch]
+    wip_limit: 40
+    color: warning
+  - key: win-back
+    name: Win Back
+    states: [win_back]
+    wip_limit: 20
+    color: primary
+  - key: archived
+    name: Archived
+    states: [archived]
+    color: secondary
+card_template:
+  size: standard
+  fields:
+    primary:
+      - title
+      - assignee
+    secondary:
+      - labels
+      - due_date
+  badges:
+    - type: priority
+    - type: comments_count
+default_filters:
+  exclude_done: false
