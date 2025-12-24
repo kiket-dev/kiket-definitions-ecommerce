@@ -1,0 +1,129 @@
+# Return Request Intake Form
+# Public form for customers to initiate product returns
+
+model_version: "1.0"
+
+intake_form:
+  key: return-request
+  name: Return Request
+  slug: return-request
+  description: Request a return or exchange for your order
+
+  settings:
+    public: true
+    captcha_enabled: true
+    rate_limit: 5
+    requires_approval: true
+    default_issue_type: return
+    default_priority: medium
+    confirmation_message: |
+      Your return request has been submitted! We'll review it within
+      1-2 business days and send you a return shipping label if approved.
+
+  fields:
+    - key: order_number
+      type: string
+      label: Order Number
+      required: true
+      placeholder: ORD-12345
+      maps_to: title
+
+    - key: return_type
+      type: enum
+      label: Request Type
+      required: true
+      options:
+        values:
+          - value: refund
+            label: Return for Refund
+          - value: exchange
+            label: Exchange for Different Item
+          - value: replacement
+            label: Replacement (Same Item)
+
+    - key: items
+      type: text
+      label: Items to Return
+      required: true
+      placeholder: |
+        List the items you want to return:
+        - Product name (quantity)
+        - Product name (quantity)
+      maps_to: description
+
+    - key: reason
+      type: enum
+      label: Reason for Return
+      required: true
+      options:
+        values:
+          - value: wrong_item
+            label: Received wrong item
+          - value: damaged
+            label: Item arrived damaged
+          - value: defective
+            label: Item is defective
+          - value: not_as_described
+            label: Not as described
+          - value: no_longer_needed
+            label: No longer needed
+          - value: size_fit
+            label: Wrong size/fit
+          - value: other
+            label: Other reason
+
+    - key: reason_details
+      type: text
+      label: Additional Details
+      required: false
+      placeholder: Please provide any additional details about the return...
+
+    - key: condition
+      type: enum
+      label: Item Condition
+      required: true
+      options:
+        values:
+          - value: unopened
+            label: Unopened / Sealed
+          - value: like_new
+            label: Like new (opened but unused)
+          - value: used
+            label: Used
+          - value: damaged
+            label: Damaged
+
+    - key: photos
+      type: file
+      label: Photos of Item
+      required: false
+      helper_text: Required for damaged or defective items
+      options:
+        allowed_types:
+          - image/*
+        max_size_mb: 10
+        max_files: 5
+
+    - key: exchange_preference
+      type: string
+      label: Exchange Preference
+      required: false
+      placeholder: Size, color, or product you'd like instead
+
+    - key: name
+      type: string
+      label: Your Name
+      required: true
+      placeholder: Full name
+
+    - key: email
+      type: email
+      label: Email Address
+      required: true
+      placeholder: you@example.com
+
+    - key: phone
+      type: phone
+      label: Phone Number
+      required: false
+      placeholder: +1 (555) 123-4567

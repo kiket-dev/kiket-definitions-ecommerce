@@ -1,0 +1,109 @@
+# Customer Support Request Intake
+# Public form for customers to submit support tickets
+
+model_version: "1.0"
+
+intake_form:
+  key: support-request
+  name: Customer Support
+  slug: support-request
+  description: Get help with your order or account
+
+  settings:
+    public: true
+    captcha_enabled: true
+    rate_limit: 10
+    requires_approval: false
+    default_issue_type: support_ticket
+    default_priority: medium
+    confirmation_message: |
+      We've received your support request! Our team typically responds
+      within 24 hours. Please check your email for updates.
+
+  fields:
+    - key: category
+      type: enum
+      label: What do you need help with?
+      required: true
+      options:
+        values:
+          - value: order_status
+            label: Order Status
+          - value: shipping
+            label: Shipping & Delivery
+          - value: returns
+            label: Returns & Refunds
+          - value: product
+            label: Product Questions
+          - value: payment
+            label: Payment Issues
+          - value: account
+            label: Account & Login
+          - value: other
+            label: Other
+
+    - key: order_number
+      type: string
+      label: Order Number
+      required: false
+      placeholder: e.g., ORD-12345
+      helper_text: If this is about a specific order
+
+    - key: subject
+      type: string
+      label: Subject
+      required: true
+      placeholder: Brief description of your issue
+      maps_to: title
+
+    - key: description
+      type: text
+      label: How can we help?
+      required: true
+      placeholder: Please describe your issue in detail...
+      maps_to: description
+
+    - key: urgency
+      type: enum
+      label: Urgency
+      required: false
+      options:
+        values:
+          - value: urgent
+            label: Urgent - Need immediate help
+          - value: normal
+            label: Normal - Within 24 hours is fine
+          - value: low
+            label: Low - No rush
+
+    - key: name
+      type: string
+      label: Your Name
+      required: true
+      placeholder: Full name
+
+    - key: email
+      type: email
+      label: Email Address
+      required: true
+      placeholder: you@example.com
+      helper_text: We'll send updates to this email
+
+    - key: phone
+      type: phone
+      label: Phone Number
+      required: false
+      placeholder: +1 (555) 123-4567
+      helper_text: Optional - for urgent issues
+
+    - key: attachments
+      type: file
+      label: Attachments
+      required: false
+      helper_text: Upload screenshots or relevant files
+      options:
+        allowed_types:
+          - image/*
+          - application/pdf
+        max_size_mb: 10
+        max_files: 5
