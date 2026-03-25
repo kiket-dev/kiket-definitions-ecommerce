@@ -24,6 +24,21 @@ states:
       color: info
       icon: 🎁
       description: First-time purchasers in their initial 30-day nurture sequence.
+    sla:
+      warning: 4h
+      breach: 24h
+      business_hours: false
+      on_warning:
+        - action: notify
+          recipients:
+            user: assignee
+          message: "{{issue.title}} approaching SLA in Onboarding"
+      on_breach:
+        - action: notify
+          recipients:
+            roles: [ops]
+          message: "SLA BREACH: {{issue.title}} exceeded 24h in Onboarding"
+          level: critical
   engaged_repeat:
     type: active
     category: active
