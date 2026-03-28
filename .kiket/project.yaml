@@ -1,0 +1,76 @@
+model_version: "1.0"
+project:
+  key: ECOMMERCE
+  name: E-commerce Customer Lifecycle
+  version: 1.0.0
+  description: Customer lifecycle management from prospect through retention and win-back.
+
+  team:
+    roles:
+      - name: lifecycle_manager
+        description: Manager overseeing customer lifecycle programs and automation
+      - name: ops
+        description: Operations specialist handling day-to-day lifecycle touchpoints
+      - name: analyst
+        description: Data analyst tracking cohort metrics and CLV
+
+  extensions:
+    optional:
+      - email
+      - slack
+
+  seed_data:
+    issues:
+      - title: Summer skincare bundle onboarding sequence
+        description: Design a 5-email welcome series for first-time buyers of the summer skincare bundle. Include usage tips, cross-sell for SPF products, and a 10% repeat purchase incentive.
+        issue_type: marketing_campaign
+        status: onboarding
+        priority: high
+        labels:
+          - onboarding
+          - skincare
+
+      - title: High-value segment churn risk - Q3 cohort
+        description: 47 customers in the $200+ AOV segment have not placed an order in 60 days. Engagement scores dropped below threshold last week.
+        issue_type: marketing_campaign
+        status: churn_watch
+        priority: critical
+        labels:
+          - churn-risk
+          - high-value
+
+      - title: Win-back campaign for lapsed subscription customers
+        description: Target 312 customers whose subscriptions lapsed in the last 90 days. Offer a free month and personalized product recommendations based on order history.
+        issue_type: marketing_campaign
+        status: win_back
+        priority: high
+        labels:
+          - win-back
+          - subscriptions
+
+      - title: New prospect nurture - trade show leads
+        description: Import 850 leads collected at the RetailTech Expo. Segment by company size and enroll in appropriate nurture tracks.
+        issue_type: marketing_campaign
+        status: prospect
+        priority: medium
+        labels:
+          - prospect
+          - trade-show
+
+      - title: Replenishment reminder automation for consumables
+        description: Set up automated replenishment reminders based on average consumption rates. Start with the top 20 SKUs by repeat purchase frequency.
+        issue_type: marketing_campaign
+        status: engaged_repeat
+        priority: medium
+        labels:
+          - automation
+          - replenishment
+
+      - title: Archive inactive contacts from 2024 holiday campaign
+        description: Suppress 1,200 contacts who have not opened any email or visited the site in 18 months. Ensure GDPR-compliant removal from all active lists.
+        issue_type: marketing_campaign
+        status: archived
+        priority: low
+        labels:
+          - compliance
+          - data-hygiene
