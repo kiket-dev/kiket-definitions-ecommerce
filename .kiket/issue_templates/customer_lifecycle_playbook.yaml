@@ -2,7 +2,7 @@ model_version: 1.0
 issue_template:
   key: ecommerce_customer_lifecycle_playbook
   name: "Lifecycle Playbook Task"
-  issue_type: marketing_campaign
+  case_type: marketing_campaign
   description: >
     Coordinate a lifecycle experiment or campaign (onboarding, win-back, replenishment).
     Use custom fields to capture target audience, success metrics, and automated touchpoints.
