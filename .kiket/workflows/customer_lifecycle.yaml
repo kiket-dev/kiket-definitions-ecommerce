@@ -32,12 +32,12 @@ states:
         - action: notify
           recipients:
             user: assignee
-          message: "{{issue.title}} approaching SLA in Onboarding"
+          message: "{{case.title}} approaching SLA in Onboarding"
       on_breach:
         - action: notify
           recipients:
             roles: [ops]
-          message: "SLA BREACH: {{issue.title}} exceeded 24h in Onboarding"
+          message: "SLA BREACH: {{case.title}} exceeded 24h in Onboarding"
           level: critical
   engaged_repeat:
     type: active
@@ -53,7 +53,7 @@ states:
     metadata:
       label: Churn Watch
       color: warning
-      icon: ⚠️
+      icon: alert-triangle
       description: Customers approaching lapse thresholds or declining engagement.
     wip_limit: 40
   win_back:
